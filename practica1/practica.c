@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 int main(int argc, char const *argv[])
 {
@@ -17,6 +19,7 @@ int main(int argc, char const *argv[])
    int termscount = 0;
    int quantities[4];
    int numingredients = 0; 
+   int I = 10; // Cantidad total de ingredientes diferentes en la totalidad de los platos por el momento lo dejo asi porque no se como sacarlo 
    while (fgets(line,1024,fp)) // coja el archivo y guardemelo linea por linea en el buffer
    {
        char * word; 
@@ -34,7 +37,8 @@ int main(int argc, char const *argv[])
            for (int i = 0; i < numingredients; i++) // un loop en el cual se guardaran cada uno de los ingredientes por cada linea
            {
                word = strtok_r(rest," ",&rest);
-               printf(Read word: %\n, word); 
+               printf("Read word: %s\n", word); 
+
            }
            
        }
@@ -44,7 +48,21 @@ int main(int argc, char const *argv[])
         printf("Quiantity: %d\n",quantities[i]);//imprimo cada una de las palabras de la primera linea
     }
     
+    int PP = quantities[0]; //cantidad de pedidos el primer numero del archivo de entrada
+    int P2 = quantities[1];//cantidad de pedidos de 2 platos
+    int P3 = quantities[2];//cantidad de pedidos de 3 platos
+    int P4 = quantities[3];//cantidad de pedidos de 4 platos
 
+    int NTPP = (2*P2)+(3*P3)+(4*P4); //cantidad total de pedidos
+    printf("Pedidos totales: %d\n",NTPP);
+
+    int P[PP][I]; // Matriz de relacion entre platos y ingredientes 
+    for (int i = 0; i < I; i++){
+        for (int j = 0; j < PP; j++){ 
+            /*en este loop se guardara un 1 cuando se encuentra un ingrediente*/ 
+        }
+    }
+    
    fclose(fp);// cierra el archivo   
    
 }
