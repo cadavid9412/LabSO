@@ -30,12 +30,12 @@ int main(int argc, char const *argv[])
        char * word; 
        char *rest = line;
        if (linecount == 0){
-            while(word = strtok_r(rest," ",&rest)){
+            /*while(word = strtok_r(rest," ",&rest)){
                 quantities[termscount] = atoi(word); //en el array quantities se guarda los nuemeros de la primera linea que son los terminos de los platos
                 termscount++;
                 printf("Word: %s\n",word);
             } //me parte la linea cuando encuentra un caracter espacio y lo guarda en word
-            linecount++;
+            linecount++;*/
        }else{
            word = strtok_r(rest," ",&rest); // guarda la primera palabra de la linea que es le numero de ingredientes
            numingredients = atoi(word); //convierte el string en un numero
