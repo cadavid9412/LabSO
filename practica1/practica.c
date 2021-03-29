@@ -2,6 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 
+void permutar (int v[],int m);
+void intercambiar (int *p1,int *p2);
+void escribir_vector (int vect[], int m);
+
+
 int main(int argc, char const *argv[])
 {
    if (argc < 2)
@@ -55,15 +60,72 @@ int main(int argc, char const *argv[])
 
     int NTPP = (2*P2)+(3*P3)+(4*P4); //cantidad total de pedidos
     printf("Pedidos totales: %d\n",NTPP);
-
-    int P[PP][I]; // Matriz de relacion entre platos y ingredientes 
-    for (int i = 0; i < I; i++){
-        for (int j = 0; j < PP; j++){ 
-            /*en este loop se guardara un 1 cuando se encuentra un ingrediente*/ 
-        }
+    int AP[NTPP];
+    
+    //llenando el vector AP
+    printf("Vector AP:");
+    for (int i = 0; i < NTPP; i++)
+    {
+       AP[i] = i;
+      
+    }
+    for (int i = 0; i < NTPP; i++)
+    {
+        printf("%d",AP[i]);
     }
     
+    printf("\n");
+    
+    //Se llama la funcion permutar 
+    permutar(AP,NTPP);
+
    fclose(fp);// cierra el archivo   
    
 }
 
+void intercambiar(int *p1, int *p2)
+{
+    int aux;
+    aux = *p1;
+    *p1 = *p2;
+    *p2 = aux;
+}
+
+void permutar (int v[], int m)
+{
+    register int i;
+    if (m > 1)
+    {
+        for (int i = 0; i < m; i++)
+        {   
+            //Se llama la funcion intercambiar y se y de nuevo permutar para ser recursivo
+            intercambiar (&v[i],&v[m]);
+            permutar(v,m-1);
+            intercambiar (&v[i],&v[m]);
+        }
+    }
+    else
+    {   
+        //se imprime las permutaciones 
+        escribir_vector(v,m);
+
+    }    
+}
+
+void escribir_vector (int vect[],int m)
+{
+    static unsigned int numero_de_permutacion = 0;
+
+    if (++numero_de_permutacion % 24 == 0)
+    {
+        printf("Ha salido");
+        putchar('\r');
+        putchar('\r');
+    }
+    printf("permutacion %2u:",numero_de_permutacion);
+    for ( int i = 0; i < m; i++)
+    {
+        printf("%d",vect[i]);
+        putchar('\n');
+    }
+}
