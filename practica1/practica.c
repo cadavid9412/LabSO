@@ -11,8 +11,8 @@ int main(int argc, char const *argv[])
 {
    if (argc < 2)
    {
-       /* code */
-       printf("hola");
+       fprintf(stderr,"hay un error con  la ruta del archivo\n");
+       return EXIT_FAILURE;
    }
    FILE* fp = fopen(argv[1],"r");//Abre el archivo
    if (!fp)
