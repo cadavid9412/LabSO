@@ -227,6 +227,7 @@ int main(int argc, char const *argv[])
     printf("\n");
 
    fclose(fp);// cierra el archivo  
+   fclose(output);// cierra el archivo  
    return EXIT_SUCCESS; 
    
 }
