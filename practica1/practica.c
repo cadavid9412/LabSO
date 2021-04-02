@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-int *vectorpermu(int *AP,int N,int *total,int PP,int P2,int I, int P3,int P4,int OP3, int OP4,int P[I][PP]);
+int *vectorpermu(int *AP,int N,int *total,int PP,int P2,int I, int P3,int P4,int OP3, int OP4,int P[I][PP],FILE* output);
 void intercambiar (int *p1,int *p2);
 int B(int N, int c);
 void reverse (int * AP,int N);
@@ -22,6 +22,8 @@ int main(int argc, char const *argv[])
    {
        printf("Error opening the file %s\n",argv[1]); //error al abrir el archivo
    }
+   FILE* output = fopen("output.txt","wt");//crea el archivo de salida 
+   fprintf(output,"Este es el archivo donde encontraras la solucion de la practica\n\n");
    char line[1024];//buffer donde se almacenaran las lineas
    int linecount = 0;
    int termscount = 0;
@@ -103,11 +105,13 @@ int main(int argc, char const *argv[])
     printf("Pedidos totales: %d\n",NTPP);
     
     printf("La matriz P es:\n");
+    fprintf(output,"La matriz de los platos:\n\n");
     int P[I][PP];//Instancia de la matriz de 1 y 0
    
     for (int i = 0; i < I; i++) //se llena la matriz con 1 y 0
     {   int aux = 0;
         printf("\n");
+        fprintf(output,"\n");
         for (int j = 0; j < PP; j++)
         {   
             int fin = ingredientesPorPlato[j];
@@ -125,6 +129,7 @@ int main(int argc, char const *argv[])
             aux = fin + aux;
             
             printf(" %d",P[i][j]); 
+            fprintf(output," %d",P[i][j]);
         }
         
     }
@@ -148,17 +153,18 @@ int main(int argc, char const *argv[])
      //Se llama la funcion que permutara el vector AP 
     int total =0;
     //int vSolucion[] = {0,2,1,3,5,4,6,7,8};
-    int *vSolucion = vectorpermu(AP,NTPP,&total,PP,P2,I,P3,P4,OP3,OP4,P);
+    int *vSolucion = vectorpermu(AP,NTPP,&total,PP,P2,I,P3,P4,OP3,OP4,P,output);
     //Total de permutaciones realizadas
     printf("Total: %d permutaciones \n",total);
 
-     printf("\n");
-
+    printf("\n");
+    fprintf(output,"\n");
     //Inicializo las variables para guardar los ingredientes diferentes de cada pedido
     char* pedido0 = (char*)malloc(21000*sizeof(char));
     char* pedido1= (char*)malloc(21000*sizeof(char));
     char* pedido2 = (char*)malloc(21000*sizeof(char));
     printf("El pedido 0 contiene:");
+    fprintf(output,"El pedido 0 contiene:");
     for (int i = 0; i < I; i++)
     {
        for (int j = 0; j < 2*P2; j++)
@@ -167,7 +173,9 @@ int main(int argc, char const *argv[])
            {    
                strcpy((pedido0+(i*21)),(palabras+(i*21))); 
                printf(" %s",(pedido0+(i*21)));
+               fprintf(output," %s",(pedido0+(i*21)));
                printf(",");
+               fprintf(output,",");
                break;
            }
            
@@ -176,6 +184,8 @@ int main(int argc, char const *argv[])
     }
     printf("\n");
     printf("El pedido 1 contiene:");
+    fprintf(output,"\n");
+    fprintf(output,"El pedido 1 contiene:");
     for (int i = 0; i < I; i++)
     {
        for (int j = 0; j < 3*P3; j++)
@@ -185,6 +195,8 @@ int main(int argc, char const *argv[])
                strcpy((pedido1+(i*21)),(palabras+(i*21))); 
                printf(" %s",(pedido1+(i*21)));
                printf(",");
+               fprintf(output," %s",(pedido1+(i*21)));
+               fprintf(output,",");
                break;
            }
            
@@ -192,7 +204,9 @@ int main(int argc, char const *argv[])
        
     }
     printf("\n");
-     printf("El pedido 2 contiene:");
+    printf("El pedido 2 contiene:");
+    fprintf(output,"\n");
+    fprintf(output,"El pedido 2 contiene:");
     for (int i = 0; i < I; i++)
     {
        for (int j = 0; j < 4*P4; j++)
@@ -202,6 +216,8 @@ int main(int argc, char const *argv[])
                strcpy((pedido2+(i*21)),(palabras+(i*21))); 
                printf(" %s",(pedido2+(i*21)));
                printf(",");
+               fprintf(output," %s",(pedido2+(i*21)));
+               fprintf(output,",");
                break;
            }
            
@@ -215,7 +231,7 @@ int main(int argc, char const *argv[])
    
 }
 
-int *vectorpermu(int *AP,int N,int *total,int PP,int P2,int I, int P3,int P4,int OP3, int OP4,int P[I][PP])
+int *vectorpermu(int *AP,int N,int *total,int PP,int P2,int I, int P3,int P4,int OP3, int OP4,int P[I][PP], FILE* output)
 {   
     int *vSolucion=malloc(N*sizeof(int));
     int comparador = 0;
@@ -277,7 +293,7 @@ int *vectorpermu(int *AP,int N,int *total,int PP,int P2,int I, int P3,int P4,int
             }
             
         }
-        if (comparador < maximoIngredientes)
+        if (comparador < maximoIngredientes && maximoIngredientes!=28)
         {   
             comparador = maximoIngredientes;
            for (int j = 0; j < N; j++)
@@ -290,12 +306,17 @@ int *vectorpermu(int *AP,int N,int *total,int PP,int P2,int I, int P3,int P4,int
         
        
     } while (i<=N);
+    fprintf(output,"\n\n");
     printf("Este es el vector de solucion:");
+    fprintf(output,"Este es el vector de solucion:");
      for (int j = 0; j < N; j++)
      {
          printf(" %d",vSolucion[j]);
+         fprintf(output," %d",vSolucion[j]);
      }
      printf("\n");
+     fprintf(output,"\n\n");
+     fprintf(output,"La cantidad de ingredientes diferentes totales son: %d\n",comparador);
      printf("La cantidad de ingredientes diferentes totales son: %d\n",comparador);
      return vSolucion;
 }
